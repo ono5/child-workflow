@@ -1,0 +1,30 @@
+name: reverge merge from master
+on:
+  pull_request:
+    branches:
+      - master
+    types: [closed]
+
+jobs:
+  reverse-merge-into-staging:
+    if: github.event.pull_request.merged == true
+    uses: ono5/parent-workflow/.github/workflows/reverse-merge.yml@release-0
+    with:
+      from-branch: master
+      into-branch: staging
+    secrets:
+      github-app-private-key: ${{ secrets.BUILD_DEPLOY_PRIVATE_KEY }}
+
+  reverse-merge-into-develop:
+    if: github.event.pull_request.merged == true
+    uses: ono5/parent-workflow/.github/workflows/reverse-merge.yml@release-0
+    with:
+      from-branch: master
+      into-branch: develop
+    secrets:
+      github-app-private-key: ${{ secrets.BUILD_DEPLOY_PRIVATE_KEY }}
+
+  reverse-merge-from-develop:
+    if: github.event.pull_request.merged == true
+    needs: reverse-merge-into-develop
+    uses: ./.github/workflows/reverse-merge-from-develop.yml
