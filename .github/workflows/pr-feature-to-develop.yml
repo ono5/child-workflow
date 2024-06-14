@@ -1,0 +1,22 @@
+name: create PR feature -> develop
+
+on:
+  pull_request:
+    branches:
+      - check
+      - release/dev
+    types: [closed]
+
+jobs:
+  git-pr-release:
+    if:
+      # master以外のブランチらのPRがマージされた場合のみ実行
+      github.event.pull_request.merged == true &&
+      github.event.pull_request.head.ref != 'master'
+    uses: ono5/parent-workflow/.github/workflows/create-pr.yml@release-0
+    with:
+      from-branch: ${{ github.head_ref }}
+      into-branch: develop
+      pr-label: feature->develop
+      pr-template-path: .github/feature-to-develop-template.erb
+      pr-assignee: ${{ github.actor }}
