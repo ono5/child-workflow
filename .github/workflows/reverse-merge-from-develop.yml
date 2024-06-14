@@ -2,7 +2,7 @@ name: reverge merge from develop
 on:
   push:
     branches: ["develop"]
-  workflow_call:
+  # workflow_call:
   # botによるpushで実行されないがPATを使いたくない
   # master PRマージ時の逆マージで明示的に呼び出せるようにする
 
