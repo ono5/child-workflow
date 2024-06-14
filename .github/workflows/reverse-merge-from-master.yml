@@ -28,4 +28,6 @@ jobs:
     if: github.event.pull_request.merged == true
     needs: reverse-merge-into-develop
     uses: ./.github/workflows/reverse-merge-from-develop.yml
-    
+    secrets:
+      github-app-private-key: ${{ secrets.BUILD_DEPLOY_PRIVATE_KEY }}
+  
