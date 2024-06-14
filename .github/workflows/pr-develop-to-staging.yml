@@ -1,0 +1,21 @@
+name: create PR develop -> staging
+
+on:
+  pull_request:
+    branches:
+      - develop
+    types: [closed]
+
+jobs:
+  git-pr-release:
+    if:
+      # master以外のブランチらのPRがマージされた場合のみ実行
+      github.event.pull_request.merged == true &&
+      github.event.pull_request.head.ref != 'master'
+    uses: ono5/parent-workflow/.github/workflows/create-pr.yml@release-0
+    with:
+      from-branch: develop
+      into-branch: staging
+      pr-label: develop->staging
+      pr-template-path: .github/develop-to-staging-template.erb
+      pr-assignee: ${{ github.actor }}
