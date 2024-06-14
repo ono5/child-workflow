@@ -1,9 +1,0 @@
-[develop->staging] <%= Time.now %>
-## 概要
-- このPRはmaster以外のブランチからdevelopへ向けたPRのマージをトリガーに自動生成されました。
-- このPRをマージすると、stagingからmasterへ向けたPRが自動生成されます。
-
-## マージ内容
-<% pull_requests.each do |pr| -%>
-- #<%=  pr.number %>
-<% end -%>
