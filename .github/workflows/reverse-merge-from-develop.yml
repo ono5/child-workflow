@@ -17,4 +17,4 @@ jobs:
       from-branch: develop
       into-branch: check
     secrets:
-      github-app-private-key: ${{ secrets.github-app-private-key != '' &&  secrets.github-app-private-key || secrets.BUILD_DEPLOY_PRIVATE_KEY s}}
+      github-app-private-key: ${{ secrets.github-app-private-key != '' &&  secrets.github-app-private-key || secrets.BUILD_DEPLOY_PRIVATE_KEY }}
