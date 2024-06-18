@@ -2,9 +2,13 @@ name: reverge merge from develop
 on:
   push:
     branches: ["develop"]
-  # workflow_call:
-  # botによるpushで実行されないがPATを使いたくない
-  # master PRマージ時の逆マージで明示的に呼び出せるようにする
+  workflow_call:
+    # botによるpushで実行されないがPATを使いたくない
+    # master PRマージ時の逆マージで明示的に呼び出せるようにする
+    secrets:
+      github-app-private-key:
+        description: "GitHub Tokenの取得に使うGitHub Appの秘密鍵"
+        required: true
 
 jobs:
   reverse-merge-into-check:
@@ -13,4 +17,4 @@ jobs:
       from-branch: develop
       into-branch: check
     secrets:
-      github-app-private-key: ${{ secrets.BUILD_DEPLOY_PRIVATE_KEY }}
+      github-app-private-key: ${{ secrets.github-app-private-key != '' &&  secrets.github-app-private-key || secrets.BUILD_DEPLOY_PRIVATE_KEY }}
